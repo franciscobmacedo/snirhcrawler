@@ -71,8 +71,15 @@ Get all parameters of the station 1627758916 inside the network 920123705 - writ
 python3 run.py parameters -n 920123705 -s 1627758916
 ```
 
-Get data for parameter 1849 of the station 1627758916 between 1980-01-01 and 2020-12-31 - writes it in `data/data-station_1627758916-parameter_1849-tmin_1980-01-01-tmax_2020-12-31`
+Get data for parameter 1849 of the station 1627758916 between 1980-01-01 and 2020-12-31 - writes it in `data/data-station_1627758916-parameter_1849-tmin_1980-01-01-tmax_2020-12-31.json`
 
 ```
 python3 run.py data -s 1627758916 -p 1849 -f 1980-01-01 -t 2020-12-31
+```
+
+Get data for multiple parameters (4237, 1436794570) and multiple stations (920752570, 920752670) between 1930-01-01 and 2020-12-31 - writes it in
+Get data for parameter 1849 of the station 1627758916 between 1980-01-01 and 2020-12-31 - writes it in `data/data-stations_920752570,920752670-parameters_4237,1436794570-tmin_1930-01-01-tmax_2020-12-31.json`
+
+```
+python3 run.py data -s 920752570 920752670 -p 4237 1436794570 -f 1930-01-01 -t 2020-12-31
 ```
