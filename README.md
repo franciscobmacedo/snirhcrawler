@@ -41,14 +41,14 @@ The crawler accepts multiple commands that will print the data and write it to a
 # all networks
 python3 run.py networks
 
-# all stations for a network_id
-python3 run.py stations -n {network_id}
+# all stations for a network_uid
+python3 run.py stations -n {network_uid}
 
-# all params of a station_id from a network_id
-python3 run.py params -n {network_id} -s {station_id}
+# all params of a station_uid from a network_uid
+python3 run.py params -n {network_uid} -s {station_uid}
 
-# data for a parameter_id of a station_id from tmin (yyyy-mm-dd) to tmax (yyyy-mm-dd)
-python3 run.py data -s {station_id} -p {parameter_id} -f {tmin} -t {tmax}
+# data for a parameter_uid of a station_uid from tmin (yyyy-mm-dd) to tmax (yyyy-mm-dd)
+python3 run.py data -s {station_uid} -p {parameter_uid} -f {tmin} -t {tmax}
 ```
 
 #### Examples

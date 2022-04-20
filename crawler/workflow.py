@@ -24,53 +24,61 @@ def dump_networks():
     pprint(networks)
     dump(config.NETWORKS_FILE, networks)
     print(
-        f"\nNetworks dumped to  {config.bcolors.OKGREEN}{config.NETWORKS_FILE}\n{config.bcolors.ENDC}")
-
-
-def dump_stations(network_id: str):
-    print(
-        f"\nFetching stations for network {config.bcolors.OKGREEN}{network_id}{config.bcolors.ENDC}...\n"
+        f"\nNetworks dumped to  {config.bcolors.OKGREEN}{config.NETWORKS_FILE}\n{config.bcolors.ENDC}"
     )
-    bot = Stations(network_id=network_id)
+
+
+def dump_stations(network_uid: str):
+    print(
+        f"\nFetching stations for network {config.bcolors.OKGREEN}{network_uid}{config.bcolors.ENDC}...\n"
+    )
+    bot = Stations(network_uid=network_uid)
     stations = [s.dict() for s in bot.get()]
     pprint(stations)
-    stations_file = config.STATIONS_FILE.format(network_id=network_id)
+    stations_file = config.STATIONS_FILE.format(network_uid=network_uid)
     dump(stations_file, stations)
     print(
-        f"\n Stations dumped to {config.bcolors.OKGREEN}{stations_file}\n{config.bcolors.ENDC}")
-
-
-def dump_parameters(network_id: str, station_id: str):
-    print(
-        f"\nFetching parameters for station {config.bcolors.OKGREEN}{station_id}{config.bcolors.ENDC} (from network {config.bcolors.OKGREEN}{network_id}{config.bcolors.ENDC})...\n"
+        f"\n Stations dumped to {config.bcolors.OKGREEN}{stations_file}\n{config.bcolors.ENDC}"
     )
-    bot = Parameters(network_id=network_id)
-    parameters = [s.dict() for s in bot.get(station_id)]
-    parameters_file = config.PARAMETERS_FILE.format(station_id=station_id)
+
+
+def dump_parameters(network_uid: str, station_uids: list[str]):
+    stations_rep = ",".join(station_uids)
+    print(
+        f"\nFetching parameters for station(s) {config.bcolors.OKGREEN}{stations_rep}{config.bcolors.ENDC} (from network {config.bcolors.OKGREEN}{network_uid}{config.bcolors.ENDC})...\n"
+    )
+    bot = Parameters(network_uid=network_uid)
+    parameters = [s.dict() for s in bot.get(station_uids)]
+    parameters_file = config.PARAMETERS_FILE.format(stations=stations_rep)
     pprint(parameters)
     dump(parameters_file, parameters)
     print(
-        f"\n Parameters dumped to {config.bcolors.OKGREEN}{parameters_file}\n{config.bcolors.ENDC}")
+        f"\n Parameters dumped to {config.bcolors.OKGREEN}{parameters_file}\n{config.bcolors.ENDC}"
+    )
 
 
-def dump_data(station_uid: str, parameter_uid: str, tmin: str, tmax: str):
+def dump_data(station_uids: list[str], parameter_uids: list[str], tmin: str, tmax: str):
+    stations_rep = ",".join(station_uids)
+    parameters_rep = ",".join(parameter_uids)
+    print(stations_rep)
     print(
         f"""\nFetching data for 
-        parameter {config.bcolors.OKGREEN}{parameter_uid}{config.bcolors.ENDC} 
-        station {config.bcolors.OKGREEN}{station_uid}{config.bcolors.ENDC} 
+        station(s) {config.bcolors.OKGREEN}{stations_rep}{config.bcolors.ENDC} 
+        parameter(s) {config.bcolors.OKGREEN}{parameters_rep}{config.bcolors.ENDC} 
         between {config.bcolors.OKGREEN}{tmin}{config.bcolors.ENDC} and {config.bcolors.OKGREEN}{tmax}{config.bcolors.ENDC}\n
         """
     )
     bot = GetData()
     data = bot.get_data(
-        station_uid=station_uid,
-        parameter_uid=parameter_uid,
+        station_uids=station_uids,
+        parameter_uids=parameter_uids,
         tmin=parse_datetime(tmin, format="%Y-%m-%d"),
         tmax=parse_datetime(tmax, format="%Y-%m-%d"),
     )
     data_file = config.DATA_FILE.format(
-        station_id=station_uid, parameter_id=parameter_uid, tmin=tmin, tmax=tmax
+        stations=stations_rep, parameters=parameters_rep, tmin=tmin, tmax=tmax
     )
     dump(data_file, data.json())
     print(
-        f"\n Data dumped to {config.bcolors.OKGREEN}{data_file}\n{config.bcolors.ENDC}")
+        f"\n Data dumped to {config.bcolors.OKGREEN}{data_file}\n{config.bcolors.ENDC}"
+    )

@@ -47,7 +47,7 @@ def test_parameters(requests_mock):
     )
 
     assert expected_responses.parameters == crawler.Parameters().get(
-        station_uid="1627743378"
+        station_uids=["1627743378"]
     )
 
 
@@ -61,9 +61,9 @@ def test_data(requests_mock):
         text=open_mock_response("data.txt"),
     )
     response = crawler.GetData().get_data(
-        station_uid="1627743378",
+        station_uids=["1627743378"],
         tmin=datetime.datetime(1980, 1, 1),
         tmax=datetime.datetime(1980, 6, 1),
-        parameter_uid=1849,
+        parameter_uids=["1849"],
     )
     assert expected_responses.data == response

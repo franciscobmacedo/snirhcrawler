@@ -8,11 +8,11 @@ LOGS_DIR = "logs"
 
 
 NETWORKS_FILE = os.path.join(DATA_DIR, "networks.json")
-STATIONS_FILE = os.path.join(DATA_DIR, "stations-network_{network_id}.json")
-PARAMETERS_FILE = os.path.join(DATA_DIR, "parameters-station_{station_id}.json")
+STATIONS_FILE = os.path.join(DATA_DIR, "stations-network_{network_uid}.json")
+PARAMETERS_FILE = os.path.join(DATA_DIR, "parameters-stations_{stations}.json")
 DATA_FILE = os.path.join(
     DATA_DIR,
-    "data-station_{station_id}-parameter_{parameter_id}-tmin_{tmin}-tmax_{tmax}.json",
+    "data-stations_{stations}-parameters_{parameters}-tmin_{tmin}-tmax_{tmax}.json",
 )
 
 

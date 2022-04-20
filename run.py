@@ -30,12 +30,18 @@ class Run:
         if args.CrawlerType == CrawlerType.networks:
             workflow.dump_networks()
         elif args.CrawlerType == CrawlerType.data:
-            self.add_station_arg()
-            self.add_param_arg()
+            self.add_stations_arg()
+            self.add_params_arg()
             self.add_tmin_arg()
             self.add_tmax_arg()
             args = self.parser.parse_args()
-            workflow.dump_data(args.station, args.parameter, args.tmin, args.tmax)
+            print(args.stations)
+            workflow.dump_data(
+                station_uids=args.stations,
+                parameter_uids=args.parameters,
+                tmin=args.tmin,
+                tmax=args.tmax,
+            )
 
         else:
             self.add_network_arg()
@@ -44,19 +50,21 @@ class Run:
                 workflow.dump_stations(args.network)
 
             if args.CrawlerType == CrawlerType.parameters:
-                self.add_station_arg()
+                self.add_stations_arg()
                 args = self.parser.parse_args()
-                workflow.dump_parameters(args.network, args.station)
+                workflow.dump_parameters(args.network, args.stations)
 
     def add_network_arg(self):
         self.parser.add_argument("-n", "--network", help="network id", required=True)
 
-    def add_station_arg(self):
-        self.parser.add_argument("-s", "--station", help="station id", required=True)
-
-    def add_param_arg(self):
+    def add_stations_arg(self):
         self.parser.add_argument(
-            "-p", "--parameter", help="parameter id", required=True
+            "-s", "--stations", nargs="+", help="station id", required=True
+        )
+
+    def add_params_arg(self):
+        self.parser.add_argument(
+            "-p", "--parameters", help="parameter id", nargs="+", required=True
         )
 
     def add_tmin_arg(self):
