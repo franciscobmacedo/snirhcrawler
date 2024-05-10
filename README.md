@@ -1,6 +1,6 @@
 # :sweat_drops: SNIRH crawler
 
-Forked from [https://github.com/franciscobmacedo/snirhcrawler](franciscobmacedo/snirhcrawler)
+Forked from [franciscobmacedo/snirhcrawler](https://github.com/franciscobmacedo/snirhcrawler)
 
 Crawler to fetch data from SNIRH
 
