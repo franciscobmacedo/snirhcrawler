@@ -14,6 +14,7 @@ class BaseCrawler:
         *args,
         **kwargs,
     ):
+        self.headers = {'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.28 Safari/537.36'}
         self.home_url = f"{self.BASE_URL}/index.php?idMain=2&idItem=1"
         self.stations_url = (
             f"{self.BASE_URL}/snirh/_dadosbase/site/xml/xml_listaestacoes.php"
@@ -30,6 +31,8 @@ class BaseCrawler:
             self.session = session
         else:
             self.start_session()
+
+        self.session.headers = self.headers
 
         self.network_uid = network_uid
         if self.network_uid and new_network:
